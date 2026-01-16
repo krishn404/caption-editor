@@ -12,6 +12,8 @@ interface Props {
 
 const FILTERS = [
   { value: "none", label: "None" },
+  { value: "cinematic", label: "Cinematic" },
+  { value: "grainy", label: "Grainy" }, // NEW
   { value: "grayscale", label: "Grayscale" },
   { value: "sepia", label: "Sepia" },
   { value: "blur", label: "Blur" },
@@ -77,18 +79,20 @@ export default function FilterPreviews({
   }, [image]);
 
   const getCanvasFilter = (filterValue: string): string => {
-    const filterMap: Record<string, string> = {
-      none: "none",
-      grayscale: "grayscale(100%)",
-      sepia: "sepia(100%)",
-      blur: "blur(4px)",
-      brightness: "brightness(1.2)",
-      contrast: "contrast(1.2)",
-      saturate: "saturate(1.5)",
-      invert: "invert(100%)",
-    };
-    return filterMap[filterValue] || "none";
+  const filterMap: Record<string, string> = {
+    none: "none",
+    cinematic: "contrast(1.4) saturate(1.3) brightness(0.95)",
+    grainy: "saturate(0.6) brightness(1.1) contrast(0.9)", // NEW - Simplified for preview
+    grayscale: "grayscale(100%)",
+    sepia: "sepia(100%)",
+    blur: "blur(4px)",
+    brightness: "brightness(1.2)",
+    contrast: "contrast(1.2)",
+    saturate: "saturate(1.5)",
+    invert: "invert(100%)",
   };
+  return filterMap[filterValue] || "none";
+};
 
   return (
     <div className={`border-t ${

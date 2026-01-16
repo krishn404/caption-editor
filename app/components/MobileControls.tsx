@@ -11,8 +11,8 @@ import TextStrokeControls from "./TextStroke";
 import ResetButton from "./ResetButton";
 
 interface Props {
-  caption: string;
-  setCaption: (val: string) => void;
+  subtitle: string;
+  setsubtitle: (val: string) => void;
   textColor: string;
   setTextColor: (val: string) => void;
   bgColor: string;
@@ -32,8 +32,8 @@ interface Props {
 }
 
 export default function MobileControls({
-  caption,
-  setCaption,
+  subtitle,
+  setsubtitle,
   textColor,
   setTextColor,
   bgColor,
@@ -97,7 +97,7 @@ export default function MobileControls({
           style={{ maxHeight: 'calc(85vh - 70px)' }}
         >
           <div className="space-y-6">
-            <CaptionInput caption={caption} setCaption={setCaption} theme={theme} />
+            <CaptionInput subtitle={subtitle} setSubtitle={setsubtitle} theme={theme} />
 
             <ColorPicker 
               title="TEXT COLOR" 

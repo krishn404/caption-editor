@@ -9,7 +9,7 @@ export function useTheme() {
 
   useEffect(() => {
     // Check localStorage on mount
-    const savedTheme = localStorage.getItem("caption-editor-theme") as Theme;
+    const savedTheme = localStorage.getItem("subtitle-editor-theme") as Theme;
     if (savedTheme) {
       setTheme(savedTheme);
     } else {
@@ -22,7 +22,7 @@ export function useTheme() {
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
-    localStorage.setItem("caption-editor-theme", newTheme);
+    localStorage.setItem("subtitle-editor-theme", newTheme);
   };
 
   return { theme, toggleTheme };

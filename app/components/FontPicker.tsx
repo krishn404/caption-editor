@@ -14,9 +14,7 @@ const FONTS = [
   { value: "'Courier New', monospace", label: "Courier New" },
   { value: "Verdana, sans-serif", label: "Verdana" },
   { value: "'Times New Roman', serif", label: "Times New Roman" },
-  { value: "Impact, sans-serif", label: "Impact" },
-  { value: "'Comic Sans MS', cursive", label: "Comic Sans MS" },
-  { value: "'Trebuchet MS', sans-serif", label: "Trebuchet MS" },
+  { value: "Roboto, sans-serif", label: "Roboto Bold Italic" }, // FIXED
 ];
 
 export default function FontPicker({ font, setFont, theme }: Props) {
@@ -30,7 +28,7 @@ export default function FontPicker({ font, setFont, theme }: Props) {
       <select
         value={font}
         onChange={(e) => setFont(e.target.value)}
-        className={`w-full px-3 py-2 border rounded text-sm focus:outline-none ${
+        className={`w-full px-3 py-3 border rounded text-sm focus:outline-none ${
           theme === 'dark'
             ? 'bg-neutral-900 border-neutral-700 focus:border-neutral-500 text-white'
             : 'bg-white border-neutral-300 focus:border-neutral-500 text-black'

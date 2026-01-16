@@ -4,13 +4,15 @@ import { Theme } from "../hooks/useTheme";
 
 interface PresetConfig {
   name: string;
-  icon: string;
+  preview: string; // Changed from icon to preview text
   settings: {
     textColor: string;
     bgColor: string;
     opacity: number;
     textStroke: number;
     textStrokeColor: string;
+    font?: string;
+    fontSize?: number;
   };
 }
 
@@ -22,7 +24,7 @@ interface Props {
 const PRESETS: PresetConfig[] = [
   {
     name: "No Background",
-    icon: "🎬",
+    preview: "Aa",
     settings: {
       textColor: "#FFFFFF",
       bgColor: "#000000",
@@ -33,7 +35,7 @@ const PRESETS: PresetConfig[] = [
   },
   {
     name: "Yellow Classic",
-    icon: "⭐",
+    preview: "Aa",
     settings: {
       textColor: "#FFD700",
       bgColor: "#000000",
@@ -44,7 +46,7 @@ const PRESETS: PresetConfig[] = [
   },
   {
     name: "Translucent Black",
-    icon: "🎥",
+    preview: "Aa",
     settings: {
       textColor: "#FFFFFF",
       bgColor: "#000000",
@@ -53,36 +55,100 @@ const PRESETS: PresetConfig[] = [
       textStrokeColor: "#000000",
     },
   },
+  {
+    name: "Roboto Bold",
+    preview: "Aa",
+    settings: {
+      textColor: "#F5E6A5",
+      bgColor: "#000000",
+      opacity: 0,
+      textStroke: 2,
+      textStrokeColor: "#000000",
+      font: "Roboto, sans-serif", // FIXED: Removed "700 italic 1em"
+      fontSize: 32,
+    },
+  },
 ];
 
 export default function Presets({ onPresetSelect, theme }: Props) {
+  const getPreviewStyle = (preset: PresetConfig) => {
+    const baseStyle: React.CSSProperties = {
+      color: preset.settings.textColor,
+      fontFamily: preset.settings.font || 'Arial, sans-serif',
+      fontSize: '24px',
+      fontWeight: 'bold',
+    };
+
+    // Add text stroke if present
+    if (preset.settings.textStroke > 0) {
+      baseStyle.WebkitTextStroke = `${preset.settings.textStroke}px ${preset.settings.textStrokeColor}`;
+      baseStyle.paintOrder = 'stroke fill';
+    }
+
+    return baseStyle;
+  };
+
+  const getBackgroundStyle = (preset: PresetConfig) => {
+    if (preset.settings.opacity > 0) {
+      const opacity = preset.settings.opacity / 100;
+      const rgb = hexToRgb(preset.settings.bgColor);
+      return {
+        backgroundColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`,
+      };
+    }
+    return {};
+  };
+
+  const hexToRgb = (hex: string) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+  };
+
   return (
-    <div>
+    <div className="w-full">
       <label className={`block text-xs font-semibold mb-3 uppercase tracking-wider ${
         theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'
       }`}>
         Caption Presets
       </label>
-      <div className="grid grid-cols-3 gap-3">
-        {PRESETS.map((preset) => (
-          <button
-            key={preset.name}
-            onClick={() => onPresetSelect(preset.settings)}
-            className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-all ${
-              theme === 'dark'
-                ? 'bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 hover:border-neutral-600'
-                : 'bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 hover:border-neutral-400'
-            }`}
-            title={preset.name}
-          >
-            <span className="text-2xl">{preset.icon}</span>
-            <span className={`text-xs font-medium text-center ${
-              theme === 'dark' ? 'text-neutral-300' : 'text-neutral-700'
-            }`}>
-              {preset.name}
-            </span>
-          </button>
-        ))}
+      
+      <div className="w-full max-w-full overflow-x-auto overflow-y-hidden pb-2 scrollbar-thin">
+        <div className="flex gap-3 w-max">
+          {PRESETS.map((preset) => (
+            <button
+              key={preset.name}
+              onClick={() => onPresetSelect(preset.settings)}
+              className={`flex-shrink-0 flex flex-col items-center gap-2 p-3 rounded-lg transition-all w-20 ${
+                theme === 'dark'
+                  ? 'bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 hover:border-neutral-600'
+                  : 'bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 hover:border-neutral-400'
+              }`}
+              title={preset.name}
+            >
+              {/* Preview Box with actual caption style */}
+              <div 
+                className={`w-14 h-10 rounded flex items-center justify-center ${
+                  theme === 'dark' ? 'bg-neutral-900' : 'bg-neutral-50'
+                }`}
+                style={getBackgroundStyle(preset)}
+              >
+                <span style={getPreviewStyle(preset)}>
+                  {preset.preview}
+                </span>
+              </div>
+              
+              <span className={`text-[9px] font-medium text-center leading-tight ${
+                theme === 'dark' ? 'text-neutral-300' : 'text-neutral-700'
+              }`}>
+                {preset.name}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -3,12 +3,11 @@
 interface Props {
   onReset: () => void;
   theme?: "light" | "dark";
-  compact?: boolean; // NEW: For icon-only version
+  compact?: boolean;
 }
 
 export default function ResetButton({ onReset, theme = "dark", compact = false }: Props) {
   if (compact) {
-    // Icon-only version for floating buttons
     return (
       <button
         onClick={onReset}
@@ -17,13 +16,13 @@ export default function ResetButton({ onReset, theme = "dark", compact = false }
             ? 'bg-white text-black hover:bg-neutral-200'
             : 'bg-black text-white hover:bg-neutral-800'
         }`}
-        title="Reset Image"
+        title="Upload New Image"
       >
-        {/* Reset/Refresh Icon */}
+        {/* Standard Upload Icon */}
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
-          width="18" 
-          height="18" 
+          width="20" 
+          height="20" 
           viewBox="0 0 24 24" 
           fill="none" 
           stroke="currentColor" 
@@ -31,15 +30,14 @@ export default function ResetButton({ onReset, theme = "dark", compact = false }
           strokeLinecap="round" 
           strokeLinejoin="round"
         >
-          <polyline points="1 4 1 10 7 10" />
-          <polyline points="23 20 23 14 17 14" />
-          <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
         </svg>
       </button>
     );
   }
 
-  // Full button version (not used anymore, but keeping for compatibility)
   return (
     <button
       onClick={onReset}

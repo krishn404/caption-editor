@@ -3,8 +3,8 @@
 import React from "react";
 
 interface ControlsProps {
-  caption: string;
-  setCaption: (value: string) => void;
+  subtitle: string;
+  setsubtitle: (value: string) => void;
   textColor: string;
   setTextColor: (value: string) => void;
   bgColor: string;
@@ -21,8 +21,8 @@ interface ControlsProps {
 }
 
 export default function Controls({
-  caption,
-  setCaption,
+  subtitle,
+  setsubtitle,
   textColor,
   setTextColor,
   bgColor,
@@ -58,15 +58,15 @@ export default function Controls({
 
   return (
     <div className="space-y-6 p-6 bg-neutral-900 rounded-lg">
-      {/* Caption Input with line break hint */}
+      {/* subtitle Input with line break hint */}
       <div>
         <label className="block text-sm font-medium mb-2">
-          Caption <span className="text-neutral-500 text-xs">(Use Shift+Enter for line breaks)</span>
+          subtitle <span className="text-neutral-500 text-xs">(Use Shift+Enter for line breaks)</span>
         </label>
         <textarea
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Enter your caption here..."
+          value={subtitle}
+          onChange={(e) => setsubtitle(e.target.value)}
+          placeholder="Enter your subtitle here..."
           className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white text-white resize-none"
           rows={4}
         />

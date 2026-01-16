@@ -51,7 +51,7 @@ export default function ExportButton({ theme }: Props) {
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.download = `captioned-image-${Date.now()}.png`;
+      link.download = `subtitle-image-${Date.now()}.png`;
       link.href = url;
       
       document.body.appendChild(link);
@@ -72,18 +72,18 @@ export default function ExportButton({ theme }: Props) {
   return (
     <button
       onClick={handleExport}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition shadow-lg ${
+      className={`flex items-center justify-center w-10 h-10 rounded-lg font-semibold text-sm transition shadow-lg ${
         theme === 'dark'
           ? 'bg-white text-black hover:bg-neutral-200'
           : 'bg-black text-white hover:bg-neutral-800'
       }`}
       title="Export Image"
     >
-      {/* Download Icon */}
+      {/* Export/Download Icon - Arrow pointing DOWN from tray */}
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
-        width="18" 
-        height="18" 
+        width="20" 
+        height="20" 
         viewBox="0 0 24 24" 
         fill="none" 
         stroke="currentColor" 
@@ -91,11 +91,12 @@ export default function ExportButton({ theme }: Props) {
         strokeLinecap="round" 
         strokeLinejoin="round"
       >
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-        <polyline points="7 10 12 15 17 10" />
-        <line x1="12" y1="15" x2="12" y2="3" />
+        {/* Arrow pointing down */}
+        <path d="M12 3v12" />
+        <path d="m8 11 4 4 4-4" />
+        {/* Tray/platform at bottom */}
+        <path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4" />
       </svg>
-      <span>Export</span>
     </button>
   );
 }
