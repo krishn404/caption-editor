@@ -44,12 +44,10 @@ export default function FilterPreviews({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // Set preview size
         const previewSize = 100;
         canvas.width = previewSize;
         canvas.height = previewSize;
 
-        // Calculate aspect ratio
         const imgAspect = img.naturalWidth / img.naturalHeight;
         let drawWidth = previewSize;
         let drawHeight = previewSize;
@@ -64,7 +62,6 @@ export default function FilterPreviews({
           offsetX = (previewSize - drawWidth) / 2;
         }
 
-        // Apply filter
         ctx.filter = getCanvasFilter(filter.value);
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, previewSize, previewSize);

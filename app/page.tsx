@@ -120,17 +120,14 @@ export default function Page() {
     img.src = image;
   };
 
-  // Open crop modal
   const handleCrop = () => {
     setShowCropModal(true);
   };
 
-  // Handle crop complete
   const handleCropComplete = (croppedImage: string) => {
     setImage(croppedImage);
   };
 
-  // Desktop Layout
   if (!isMobile) {
     return (
       <div className={`flex h-screen overflow-hidden ${

@@ -167,7 +167,6 @@ export default function Presets({ onPresetSelect, theme, isMobile }: Props) {
       textDecoration: preset.settings.isUnderline ? 'underline' : 'none',
     };
 
-    // Add text stroke if present
     if (preset.settings.textStroke > 0) {
       baseStyle.WebkitTextStroke = `${preset.settings.textStroke}px ${preset.settings.textStrokeColor}`;
       baseStyle.paintOrder = 'stroke fill';

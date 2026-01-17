@@ -16,12 +16,10 @@ export default function ExportButton({ theme }: Props) {
     }
 
     try {
-      const exportScale = 2;
+      // Use the canvas directly - it's already at high resolution
+      const exportCanvas = canvas;
       
-      const exportCanvas = document.createElement("canvas");
-      exportCanvas.width = canvas.width * exportScale;
-      exportCanvas.height = canvas.height * exportScale;
-      
+      // If you want to scale, use device pixel ratio
       const ctx = exportCanvas.getContext("2d");
       if (!ctx) {
         throw new Error("Failed to get canvas context");
@@ -29,12 +27,6 @@ export default function ExportButton({ theme }: Props) {
 
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-
-      ctx.drawImage(
-        canvas,
-        0, 0, canvas.width, canvas.height,
-        0, 0, exportCanvas.width, exportCanvas.height
-      );
 
       const blob = await new Promise<Blob>((resolve, reject) => {
         exportCanvas.toBlob(

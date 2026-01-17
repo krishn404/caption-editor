@@ -11,14 +11,12 @@ interface Props {
   theme: Theme;
 }
 
-// Generate a comprehensive color palette with multiple hues and brightness levels
 const generateColorPalette = () => {
   const colors: string[] = [];
   const hues = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345];
   const saturations = [100, 80, 60];
   const brightnesses = [90, 70, 50, 30];
 
-  // Add pure hues with variations
   for (const hue of hues) {
     for (const sat of saturations) {
       for (const bright of brightnesses) {
@@ -28,12 +26,10 @@ const generateColorPalette = () => {
     }
   }
 
-  // Add grayscale
   for (let i = 0; i <= 100; i += 5) {
     colors.push(hslToHex(0, 0, i));
   }
 
-  // Remove duplicates
   return [...new Set(colors)];
 };
 

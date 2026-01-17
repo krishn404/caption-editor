@@ -27,7 +27,6 @@ export default function CropModal({ image, onClose, onCropComplete, theme }: Pro
     img.onload = () => {
       imgRef.current = img;
       
-      // Calculate canvas size to fit image
       const maxWidth = 800;
       const maxHeight = 500;
       let width = img.width;
@@ -44,7 +43,6 @@ export default function CropModal({ image, onClose, onCropComplete, theme }: Pro
       
       setCanvasSize({ width, height });
       
-      // Set initial crop area to full image with some padding
       const padding = 20;
       setCropArea({
         x: padding,
@@ -75,14 +73,11 @@ export default function CropModal({ image, onClose, onCropComplete, theme }: Pro
     canvas.width = canvasSize.width;
     canvas.height = canvasSize.height;
 
-    // Draw image
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    // Draw dark overlay
     ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Clear crop area to show original image
     ctx.clearRect(cropArea.x, cropArea.y, cropArea.width, cropArea.height);
     ctx.drawImage(
       img,
@@ -96,35 +91,24 @@ export default function CropModal({ image, onClose, onCropComplete, theme }: Pro
       cropArea.height
     );
 
-    // Draw crop border
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 2;
     ctx.strokeRect(cropArea.x, cropArea.y, cropArea.width, cropArea.height);
 
-    // Draw corner handles
     const handleSize = 12;
     ctx.fillStyle = "#FFFFFF";
     
-    // Top-left
     ctx.fillRect(cropArea.x - handleSize / 2, cropArea.y - handleSize / 2, handleSize, handleSize);
-    // Top-right
     ctx.fillRect(cropArea.x + cropArea.width - handleSize / 2, cropArea.y - handleSize / 2, handleSize, handleSize);
-    // Bottom-left
     ctx.fillRect(cropArea.x - handleSize / 2, cropArea.y + cropArea.height - handleSize / 2, handleSize, handleSize);
-    // Bottom-right
     ctx.fillRect(cropArea.x + cropArea.width - handleSize / 2, cropArea.y + cropArea.height - handleSize / 2, handleSize, handleSize);
 
-    // Draw edge handles (middle of each side)
     const edgeHandleSize = 8;
     ctx.fillStyle = "#FFFFFF";
     
-    // Top
     ctx.fillRect(cropArea.x + cropArea.width / 2 - edgeHandleSize / 2, cropArea.y - edgeHandleSize / 2, edgeHandleSize, edgeHandleSize);
-    // Bottom
     ctx.fillRect(cropArea.x + cropArea.width / 2 - edgeHandleSize / 2, cropArea.y + cropArea.height - edgeHandleSize / 2, edgeHandleSize, edgeHandleSize);
-    // Left
     ctx.fillRect(cropArea.x - edgeHandleSize / 2, cropArea.y + cropArea.height / 2 - edgeHandleSize / 2, edgeHandleSize, edgeHandleSize);
-    // Right
     ctx.fillRect(cropArea.x + cropArea.width - edgeHandleSize / 2, cropArea.y + cropArea.height / 2 - edgeHandleSize / 2, edgeHandleSize, edgeHandleSize);
   };
 
