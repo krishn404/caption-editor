@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Caption Editor",
     images: [
       {
-        url: "https://caption-editor-theta.vercel.app/og.png",
+        url: "https://www.thesubtitles.xyz/og.png",
         width: 1200,
         height: 630,
         alt: "Caption Editor – Add captions to photos",
