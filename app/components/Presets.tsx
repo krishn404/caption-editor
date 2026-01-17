@@ -22,9 +22,10 @@ interface PresetConfig {
 interface Props {
   onPresetSelect: (settings: PresetConfig['settings']) => void;
   theme: Theme;
+  isMobile?: boolean;
 }
 
-const PRESETS: PresetConfig[] = [
+const PRESETS_DESKTOP: PresetConfig[] = [
   {
     name: "No Background",
     preview: "Aa",
@@ -34,6 +35,7 @@ const PRESETS: PresetConfig[] = [
       opacity: 0,
       textStroke: 3,
       textStrokeColor: "#000000",
+      fontSize: 28,
       isBold: false,
       isItalic: false,
       isUnderline: false,
@@ -48,6 +50,72 @@ const PRESETS: PresetConfig[] = [
       opacity: 0,
       textStroke: 3,
       textStrokeColor: "#000000",
+      fontSize: 28,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+    },
+  },
+  {
+    name: "Translucent Black",
+    preview: "Aa",
+    settings: {
+      textColor: "#FFFFFF",
+      bgColor: "#000000",
+      opacity: 70,
+      textStroke: 0,
+      fontSize: 28,
+      textStrokeColor: "#000000",
+      font: "courier new",
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+    },
+  },
+  {
+    name: "Roboto Bold",
+    preview: "Aa",
+    settings: {
+      textColor: "#F5E6A5",
+      bgColor: "#000000",
+      opacity: 0,
+      textStroke: 0,
+      textStrokeColor: "#000000",
+      font: "Roboto, sans-serif",
+      fontSize: 28,
+      isBold: false,
+      isItalic: true,
+      isUnderline: false,
+    },
+  },
+];
+
+const PRESETS_MOBILE: PresetConfig[] = [
+  {
+    name: "No Background",
+    preview: "Aa",
+    settings: {
+      textColor: "#FFFFFF",
+      bgColor: "#000000",
+      opacity: 0,
+      textStroke: 2,
+      textStrokeColor: "#000000",
+      fontSize: 18,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+    },
+  },
+  {
+    name: "Yellow Classic",
+    preview: "Aa",
+    settings: {
+      textColor: "#FFD700",
+      bgColor: "#000000",
+      opacity: 0,
+      textStroke: 2,
+      textStrokeColor: "#000000",
+      fontSize: 18,
       isBold: false,
       isItalic: false,
       isUnderline: false,
@@ -76,24 +144,10 @@ const PRESETS: PresetConfig[] = [
       textColor: "#F5E6A5",
       bgColor: "#000000",
       opacity: 0,
-      textStroke: 1,
+      textStroke: 0,
       textStrokeColor: "#000000",
       font: "Roboto, sans-serif",
-      fontSize: 18,
-      isBold: false,
-      isItalic: true,
-      isUnderline: false,
-    },
-  },
-  {
-    name: "Italic Style",
-    preview: "Aa",
-    settings: {
-      textColor: "#FFFFFF",
-      bgColor: "#000000",
-      opacity: 0,
-      textStroke: 2,
-      textStrokeColor: "#000000",
+      fontSize: 16,
       isBold: false,
       isItalic: true,
       isUnderline: false,
@@ -101,7 +155,8 @@ const PRESETS: PresetConfig[] = [
   },
 ];
 
-export default function Presets({ onPresetSelect, theme }: Props) {
+export default function Presets({ onPresetSelect, theme, isMobile }: Props) {
+  const PRESETS = isMobile ? PRESETS_MOBILE : PRESETS_DESKTOP;
   const getPreviewStyle = (preset: PresetConfig) => {
     const baseStyle: React.CSSProperties = {
       color: preset.settings.textColor,

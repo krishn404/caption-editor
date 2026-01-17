@@ -145,10 +145,14 @@ export default function Page() {
             : 'border-neutral-200 bg-neutral-50'
         }`}>
           <div className="pb-4">
-            <h1 className="text-xl font-bold">subtlyy</h1>
+            <h1 className={`text-3xl font-black tracking-tight ${
+              theme === 'dark'
+                ? 'text-white'
+                : 'text-black'
+            }`} style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}>thesubtitles</h1>
           </div>
 
-          <Presets onPresetSelect={handlePresetSelect} theme={theme} />
+          <Presets onPresetSelect={handlePresetSelect} theme={theme} isMobile={isMobile} />
 
           <CaptionInput subtitle={subtitle} setSubtitle={setsubtitle} theme={theme} />
 
@@ -275,7 +279,11 @@ export default function Page() {
             ? 'bg-[#0d0d0d]'
             : 'bg-neutral-50'
         }`}>
-          <h1 className="text-lg font-bold">subtitle Editor</h1>
+          <h1 className={`text-2xl font-black tracking-tight ${
+            theme === 'dark'
+              ? 'text-white'
+              : 'text-black'
+          }`} style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}>thesubtitles</h1>
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
@@ -333,7 +341,7 @@ export default function Page() {
                 />
               )}
 
-              <Presets onPresetSelect={handlePresetSelect} theme={theme} />
+              <Presets onPresetSelect={handlePresetSelect} theme={theme} isMobile={isMobile} />
 
               <CaptionInput subtitle={subtitle} setSubtitle={setsubtitle} theme={theme} />
 
