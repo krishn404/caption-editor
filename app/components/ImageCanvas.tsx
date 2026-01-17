@@ -14,6 +14,9 @@ interface Props {
   fontSize: number;
   textStroke: number;
   textStrokeColor: string;
+  isBold: boolean;
+  isItalic: boolean;
+  isUnderline: boolean;
   theme: Theme;
 }
 
@@ -37,6 +40,9 @@ export default function ImageCanvas({
   fontSize,
   textStroke,
   textStrokeColor,
+  isBold,
+  isItalic,
+  isUnderline,
   theme,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -97,7 +103,7 @@ export default function ImageCanvas({
       drawToCanvas(img, img.naturalWidth, img.naturalHeight, 0, 0, false);
     };
     img.src = image;
-  }, [image, subtitle, textColor, bgColor, opacity, filter, font, fontSize, textStroke, textStrokeColor, containerDimensions, theme]);
+  }, [image, subtitle, textColor, bgColor, opacity, filter, font, fontSize, textStroke, textStrokeColor, isBold, isItalic, isUnderline, containerDimensions, theme]);
 
   const drawToCanvas = (
     img: HTMLImageElement,
@@ -298,14 +304,13 @@ const applyGrainyEffect = (
   const bottomMargin = 12 * scale;
   const scaledFontSize = fontSize * scale;
 
-  // FIXED: Apply font properly
-  // Check if font is Roboto and apply bold italic
-  if (font.includes('Roboto')) {
-    ctx.font = `italic bold ${scaledFontSize}px Roboto, sans-serif`;
-  } else {
-    ctx.font = `${scaledFontSize}px ${font}`;
-  }
+  // Build font string with text styles
+  let fontString = '';
+  if (isBold) fontString += 'bold ';
+  if (isItalic) fontString += 'italic ';
+  fontString += `${scaledFontSize}px ${font}`;
   
+  ctx.font = fontString;
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
@@ -316,7 +321,6 @@ const applyGrainyEffect = (
 
   const textWidths = lines.map((line) => ctx.measureText(line).width);
   const maxTextWidth = Math.max(...textWidths);
-  
   const bgWidth = maxTextWidth + paddingX * 2;
   const bgHeight = textHeight + paddingY * 2;
 
@@ -345,6 +349,21 @@ const applyGrainyEffect = (
 
     ctx.fillStyle = textColor;
     ctx.fillText(line, textX, textY);
+
+    // Draw underline if enabled
+    if (isUnderline) {
+      const metrics = ctx.measureText(line);
+      const underlineY = textY + scaledFontSize * 0.15; // Position below text
+      const underlineWidth = metrics.width;
+      const underlineStartX = textX - underlineWidth / 2;
+
+      ctx.strokeStyle = textColor;
+      ctx.lineWidth = Math.max(1, scaledFontSize * 0.05);
+      ctx.beginPath();
+      ctx.moveTo(underlineStartX, underlineY);
+      ctx.lineTo(underlineStartX + underlineWidth, underlineY);
+      ctx.stroke();
+    }
   });
 };
 

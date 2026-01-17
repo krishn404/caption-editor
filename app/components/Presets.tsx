@@ -13,6 +13,9 @@ interface PresetConfig {
     textStrokeColor: string;
     font?: string;
     fontSize?: number;
+    isBold?: boolean;
+    isItalic?: boolean;
+    isUnderline?: boolean;
   };
 }
 
@@ -31,6 +34,9 @@ const PRESETS: PresetConfig[] = [
       opacity: 0,
       textStroke: 3,
       textStrokeColor: "#000000",
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
     },
   },
   {
@@ -42,6 +48,9 @@ const PRESETS: PresetConfig[] = [
       opacity: 0,
       textStroke: 3,
       textStrokeColor: "#000000",
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
     },
   },
   {
@@ -52,7 +61,12 @@ const PRESETS: PresetConfig[] = [
       bgColor: "#000000",
       opacity: 70,
       textStroke: 0,
+      fontSize: 18,
       textStrokeColor: "#000000",
+      font: "courier new",
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
     },
   },
   {
@@ -62,10 +76,27 @@ const PRESETS: PresetConfig[] = [
       textColor: "#F5E6A5",
       bgColor: "#000000",
       opacity: 0,
+      textStroke: 1,
+      textStrokeColor: "#000000",
+      font: "Roboto, sans-serif",
+      fontSize: 18,
+      isBold: false,
+      isItalic: true,
+      isUnderline: false,
+    },
+  },
+  {
+    name: "Italic Style",
+    preview: "Aa",
+    settings: {
+      textColor: "#FFFFFF",
+      bgColor: "#000000",
+      opacity: 0,
       textStroke: 2,
       textStrokeColor: "#000000",
-      font: "Roboto, sans-serif", // FIXED: Removed "700 italic 1em"
-      fontSize: 32,
+      isBold: false,
+      isItalic: true,
+      isUnderline: false,
     },
   },
 ];
@@ -76,7 +107,9 @@ export default function Presets({ onPresetSelect, theme }: Props) {
       color: preset.settings.textColor,
       fontFamily: preset.settings.font || 'Arial, sans-serif',
       fontSize: '24px',
-      fontWeight: 'bold',
+      fontWeight: preset.settings.isBold ? 'bold' : 'normal',
+      fontStyle: preset.settings.isItalic ? 'italic' : 'normal',
+      textDecoration: preset.settings.isUnderline ? 'underline' : 'none',
     };
 
     // Add text stroke if present

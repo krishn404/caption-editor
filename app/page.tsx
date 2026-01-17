@@ -13,6 +13,7 @@ import FontPicker from "./components/FontPicker";
 import FontSizeSlider from "./components/FontSizeSlider";
 import ResetButton from "./components/ResetButton";
 import TextStrokeControls from "./components/TextStroke";
+import TextStyles from "./components/TextStyles";
 import ThemeToggle from "./components/ThemeToggle";
 import Presets from "./components/Presets";
 import CropRotateControls from "./components/CropRotateControls";
@@ -31,6 +32,9 @@ export default function Page() {
   const [fontSize, setFontSize] = useState(28);
   const [textStroke, setTextStroke] = useState(3);
   const [textStrokeColor, setTextStrokeColor] = useState("#000000");
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+  const [isUnderline, setIsUnderline] = useState(false);
   const [showCropModal, setShowCropModal] = useState(false);
 
   const { theme, toggleTheme } = useTheme();
@@ -47,6 +51,9 @@ export default function Page() {
     setFontSize(28);
     setTextStroke(3);
     setTextStrokeColor("#000000");
+    setIsBold(false);
+    setIsItalic(false);
+    setIsUnderline(false);
   };
 
   const handleSetImage = (file: string | null) => {
@@ -61,6 +68,9 @@ export default function Page() {
     textStrokeColor: string;
     font?: string;
     fontSize?: number;
+    isBold?: boolean;
+    isItalic?: boolean;
+    isUnderline?: boolean;
   }) => {
     setTextColor(settings.textColor);
     setBgColor(settings.bgColor);
@@ -73,6 +83,15 @@ export default function Page() {
     }
     if (settings.fontSize) {
       setFontSize(settings.fontSize);
+    }
+    if (settings.isBold !== undefined) {
+      setIsBold(settings.isBold);
+    }
+    if (settings.isItalic !== undefined) {
+      setIsItalic(settings.isItalic);
+    }
+    if (settings.isUnderline !== undefined) {
+      setIsUnderline(settings.isUnderline);
     }
   };
 
@@ -148,6 +167,16 @@ export default function Page() {
             theme={theme}
           />
 
+          <TextStyles
+            isBold={isBold}
+            setIsBold={setIsBold}
+            isItalic={isItalic}
+            setIsItalic={setIsItalic}
+            isUnderline={isUnderline}
+            setIsUnderline={setIsUnderline}
+            theme={theme}
+          />
+
           <ColorPicker 
             title="BACKGROUND COLOR" 
             value={bgColor} 
@@ -199,6 +228,9 @@ export default function Page() {
                   fontSize={fontSize}
                   textStroke={textStroke}
                   textStrokeColor={textStrokeColor}
+                  isBold={isBold}
+                  isItalic={isItalic}
+                  isUnderline={isUnderline}
                   theme={theme}
                 />
               </div>
@@ -274,22 +306,14 @@ export default function Page() {
                 fontSize={fontSize}
                 textStroke={textStroke}
                 textStrokeColor={textStrokeColor}
+                isBold={isBold}
+                isItalic={isItalic}
+                isUnderline={isUnderline}
                 theme={theme}
               />
             </div>
           )}
         </div>
-
-        {!image ? (
-          <DummyFilterPreviews theme={theme} />
-        ) : (
-          <FilterPreviews
-            image={image}
-            currentFilter={filter}
-            onFilterSelect={setFilter}
-            theme={theme}
-          />
-        )}
 
         {image && (
           <div className="flex-1 overflow-y-auto">
@@ -298,6 +322,17 @@ export default function Page() {
                 ? 'bg-[#0d0d0d]'
                 : 'bg-neutral-50'
             }`}>
+              {!image ? (
+                <DummyFilterPreviews theme={theme} />
+              ) : (
+                <FilterPreviews
+                  image={image}
+                  currentFilter={filter}
+                  onFilterSelect={setFilter}
+                  theme={theme}
+                />
+              )}
+
               <Presets onPresetSelect={handlePresetSelect} theme={theme} />
 
               <CaptionInput subtitle={subtitle} setSubtitle={setsubtitle} theme={theme} />
@@ -314,6 +349,16 @@ export default function Page() {
                 setTextStroke={setTextStroke}
                 textStrokeColor={textStrokeColor}
                 setTextStrokeColor={setTextStrokeColor}
+                theme={theme}
+              />
+
+              <TextStyles
+                isBold={isBold}
+                setIsBold={setIsBold}
+                isItalic={isItalic}
+                setIsItalic={setIsItalic}
+                isUnderline={isUnderline}
+                setIsUnderline={setIsUnderline}
                 theme={theme}
               />
 
